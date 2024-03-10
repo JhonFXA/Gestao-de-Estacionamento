@@ -7,7 +7,7 @@ char Estaciona[30][14];
 int CarrosPorHorario[14];
 // 30 vagas
 // Mantem placa com 7 caracteres, sinal de + e 5 caracteres para hora
-float Valor;
+float Valor, Montante = 0;
 char Responsavel[21], Iniciou = 0;
 
 void AbrirCaixa()
@@ -137,6 +137,7 @@ void ClienteSai()
       if (QuantiaPaga >= ValorRequisitado)
       {
         Troco = QuantiaPaga - ValorRequisitado;
+        Montante += QuantiaPaga - Troco;
         printf("\nValor pago: R$%.2f.\n", QuantiaPaga);
         printf("O troco eh de R$%.2f.", Troco);
       }
@@ -156,6 +157,7 @@ void ClienteSai()
 }
 
 void FecharCaixa(){
+  int HoraMaiorEntrada = 6; //Horario com mais carros estacionados
   system("cls");
   system("color 80"); // 8 - cinza  0 - preto
   printf("\n >>> Estacionamento <<< \n");
@@ -163,8 +165,12 @@ void FecharCaixa(){
   printf("\n    FECHANDO CAIXA \n");
   printf("<============= Relatorio =============>\n");
   for(int i = 0; i<14; i++){
+    if(CarrosPorHorario[i]>CarrosPorHorario[HoraMaiorEntrada-6])
+      HoraMaiorEntrada = i+6;
     printf("Horario: %d horas | Quantidade de carros: %d\n", i+6, CarrosPorHorario[i]);
   }
+  printf("\nHorario com maior entrada de veiculos: %d\n", HoraMaiorEntrada);
+  printf("\nMontante: R$%.2f\n", Montante);
 
   printf("<=====================================>\n\n");
   for(int i = 0; i<30; i++){
@@ -214,7 +220,7 @@ int main()
       FecharCaixa();
       break;
     }
-  } while (Op != 4);
+  } while (1);
 
   return 0;
 }
