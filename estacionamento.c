@@ -220,7 +220,7 @@ int main()
       FecharCaixa();
       break;
     }
-  } while (1);
+  } while (Op!=4);
 
   return 0;
 }
